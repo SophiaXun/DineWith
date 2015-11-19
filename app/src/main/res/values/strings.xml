@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DineWith</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_add_wish_list">AddWishList</string>
+    <string name="title_activity_wish_list_template">wishListTemplate</string>
+    <string name="title_activity_list_view">listView</string>
+</resources>
