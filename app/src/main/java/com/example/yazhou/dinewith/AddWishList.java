@@ -1,5 +1,6 @@
 package com.example.yazhou.dinewith;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -29,7 +30,8 @@ public class AddWishList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_wish_list);
 
-        dinewithDb=new DatabaseHelper(this);
+        dinewithDb=new DatabaseHelper(getBaseContext());
+
 
         userIdEditText=(EditText)findViewById(R.id.userIdEditText);
         dateEditText=(EditText)findViewById(R.id.dateEditText);
@@ -56,6 +58,7 @@ public class AddWishList extends AppCompatActivity {
         submitButton.setOnClickListener(
                 new View.OnClickListener(){
                     public void onClick(View v){
+
                         int userId=Integer.parseInt(userIdEditText.getText().toString());
                         int restaurantId=Integer.parseInt(restaurantIdEditText.getText().toString());
                         int completeFlag=Integer.parseInt(completeFlagEditText.getText().toString());
@@ -68,9 +71,16 @@ public class AddWishList extends AppCompatActivity {
                             Log.d("Wish List Insert"," false");
                         }
 
+                        Log.d("Hello","World");
+                        Intent intent=new Intent("com.example.yazhou.dinewith.HomePage");
+                        startActivity(intent);
                     }
 
                 }
+
+
+
+
         );
     }
 

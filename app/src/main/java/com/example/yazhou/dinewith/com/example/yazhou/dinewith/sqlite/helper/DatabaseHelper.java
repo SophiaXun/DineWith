@@ -203,6 +203,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return user;
     }
 
+    public boolean Login(String name, String pwd){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT PWD FROM " + TABLE_USER + " WHERE "+ KEY_USER_USERNAME+ " =  '" + name+"'";
+//        String selectQuery = "SELECT * FROM " + TABLE_USER + " WHERE "+KEY_USER_USERNAME+"= 'Sophia'";
+        Cursor c=db.rawQuery(selectQuery,null);
+
+        if(c!=null)
+            c.moveToFirst();
+
+        String rightPwd = c.getString(c.getColumnIndex(KEY_USER_PWD));
+        Log.i("1",rightPwd);
+        Log.i("2",pwd);
+        if(pwd.equals(rightPwd)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public Restaurant getRestaurant(long Id){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -272,6 +291,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public void generateMetadata(){
+
+
+
+            //create Users
+            User user1 = new User(1, "Sophia", "1");
+            User user2 = new User(2, "Jason", "2");
+
+            //create WishList
+            WishList wishList1 = new WishList(1, 1, "11-15-2015", 1, 0);
+            WishList wishList2 = new WishList(2, 1, "11-16-2015", 2, 0);
+            WishList wishList3 = new WishList(3, 2, "11-17-2015", 1, 1);
+
+            //create Restaurant
+            Restaurant restaurant1 = new Restaurant(1, "Hello", "Beijing");
+            Restaurant restaurant2 = new Restaurant(2, "World", "Sydney");
+
+            //create Participation
+            Participation participation1 = new Participation(1,1 ,2 );
+            Participation participation2 = new Participation(2, 1, 1);
+
+            // Inserting data in db
+            //insert user into db
+            long user1_id=createUser(user1);
+            long user2_id=createUser(user2);
+
+            //insert restaurant into db
+            long restaurant1_id=createRestaurant(restaurant1);
+            long restaurant2_id=createRestaurant(restaurant2);
+
+            //insert wishList into db
+            long wishLish1_id=createWishlist(wishList1);
+            long wishList2_id=createWishlist(wishList2);
+            long wishList3_id=createWishlist(wishList3);
+
+            //insert participation into db
+            long participation1_id=createParticipation(participation1);
+            long participation2_id=createParticipation(participation2);
+
+
+
+    }
 
 
     // closing database

@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.helper.DatabaseHelper;
+import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model.User;
 
 public class Login extends AppCompatActivity {
     private static EditText username;
@@ -27,6 +28,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         dineWithDB=new DatabaseHelper(this);
+
 
         LoginButton();
         setSupportActionBar(toolbar);
@@ -45,16 +47,25 @@ public class Login extends AppCompatActivity {
         username= (EditText)findViewById(R.id.usernameEditText);
         pwd= (EditText)findViewById(R.id.pwdEditText);
         loginButton= (Button)findViewById(R.id.loginButton);
+
         loginButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d("Hello","World");
-                        Intent intent=new Intent("com.example.yazhou.dinewith.HomePage");
-                        startActivity(intent);
+
+//                        dineWithDB.generateMetadata();
+                        String usernameString=username.getText().toString();
+                        String pwdString=pwd.getText().toString();
+                        boolean loginResult=dineWithDB.Login(usernameString,pwdString);
+                        if(loginResult){
+                            Intent intent=new Intent("com.example.yazhou.dinewith.HomePage");
+                            startActivity(intent);
+                        }else{
+                            TextView  reminder=(TextView)findViewById(R.id.reminderTextView);
+                            reminder.setText("Incorrect Password");
+                        }
                     }
                 }
-
         );
     }
 

@@ -5,11 +5,24 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.yazhou.dinewith.HomePage">
+    tools:context="com.example.yazhou.dinewith.HomePage"
+    android:weightSum="1"
+    android:orientation="vertical">
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:id="@+id/addWishlistButton"
+        android:layout_gravity="bottom" />
 
     <ListView
         android:id="@+id/wishListListView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" >
     </ListView>
+
+
+
+
 </LinearLayout>
