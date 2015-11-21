@@ -30,6 +30,7 @@ public class Login extends AppCompatActivity {
         dineWithDB=new DatabaseHelper(this);
 
 
+
         LoginButton();
         setSupportActionBar(toolbar);
 
@@ -52,10 +53,17 @@ public class Login extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+///////////////////////////////////////////////////////////////////////////////////
 
-//                        dineWithDB.generateMetadata();
-                        String usernameString=username.getText().toString();
-                        String pwdString=pwd.getText().toString();
+                         dineWithDB.generateMetadata();
+
+//                        String usernameString=username.getText().toString();
+//                        String pwdString=pwd.getText().toString();
+
+// ////////////////////////////////////////////////////////////////////////////////
+                        String usernameString=new String("Sophia");
+                        String pwdString=new String("1");
+/////////////////////////////////////////////////////////////////////////
                         boolean loginResult=dineWithDB.Login(usernameString,pwdString);
                         if(loginResult){
                             Intent intent=new Intent("com.example.yazhou.dinewith.HomePage");

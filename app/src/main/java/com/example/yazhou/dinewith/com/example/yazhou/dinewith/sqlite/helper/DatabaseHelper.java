@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model.DisplayWishList;
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model.Participation;
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model.Restaurant;
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model.User;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Logcat
     public static final String LOG = "DatabaseHelper";
-    public static final int DATABASE_VERSION =1;
+    public static final int DATABASE_VERSION =2;
     public static final String DATABASE_NAME="DineWith.db";
 
     //Table names
@@ -88,7 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_RESTAURANT);
         db.execSQL(CREATE_TABLE_WISHLIST);
         db.execSQL(CREATE_TABLE_PARTICIPATION);
-
+/////////////////////////////////////////////////////////////////////////////////////////
 //        onCreate(db);
     }
 
@@ -123,9 +124,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_ID,restaurant.getId());
-        values.put(KEY_RESTAURANT_RESTAURANTNAME,restaurant.getName());
-        values.put(KEY_RESTAURANT_LOCATION,restaurant.getLocation());
+        values.put(KEY_ID, restaurant.getId());
+        values.put(KEY_RESTAURANT_RESTAURANTNAME, restaurant.getName());
+        values.put(KEY_RESTAURANT_LOCATION, restaurant.getLocation());
 
         // insert row
         long longRestaurantId=db.insert(TABLE_RESTAURANT,null,values);
@@ -139,9 +140,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_ID,wishList.getId());
         values.put(KEY_WISHLIST_USERID,wishList.getUserId());
-        values.put(KEY_WISHLIST_DATE,wishList.getDate());
-        values.put(KEY_WISHLIST_RESTAURANTID,wishList.getRestaurantId());
-        values.put(KEY_WISHLIST_COMPLETEFLAG,wishList.getCompleteFlag());
+        values.put(KEY_WISHLIST_DATE, wishList.getDate());
+        values.put(KEY_WISHLIST_RESTAURANTID, wishList.getRestaurantId());
+        values.put(KEY_WISHLIST_COMPLETEFLAG, wishList.getCompleteFlag());
 
         // insert row
         long longWishlistId=db.insert(TABLE_WISHLIST,null,values);
@@ -213,8 +214,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             c.moveToFirst();
 
         String rightPwd = c.getString(c.getColumnIndex(KEY_USER_PWD));
-        Log.i("1",rightPwd);
-        Log.i("2",pwd);
         if(pwd.equals(rightPwd)){
             return true;
         }else{
@@ -262,34 +261,145 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return participation;
     }
 
-    public ArrayList<WishList> listAllWishList(){
+    public ArrayList<DisplayWishList> displayAllWishList(){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + TABLE_WISHLIST ;
-
-        Log.e(LOG, selectQuery);
-
+        ArrayList<DisplayWishList> sqlDisplayWishListArrayList=new ArrayList<>();
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if (c.getCount()==0){
+        if (c==null){
             Log.d("DatabaseHelper","No wish list in DB");
             return null;
         }else{
-            ArrayList<WishList> sqlWishListArrayList=new ArrayList<>();
+            c.moveToFirst();
 
-            while(c.moveToNext()){
-                WishList wishList= new WishList();
-                wishList.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-                wishList.setUserId(c.getInt(c.getColumnIndex(KEY_WISHLIST_USERID)));
-                wishList.setDate(c.getString(c.getColumnIndex(KEY_WISHLIST_DATE)));
-                wishList.setRestaurantId(c.getInt(c.getColumnIndex(KEY_WISHLIST_RESTAURANTID)));
-                wishList.setCompleteFlag(c.getInt(c.getColumnIndex(KEY_WISHLIST_COMPLETEFLAG)));
-                sqlWishListArrayList.add(wishList);
-            }
-            return sqlWishListArrayList;
+//            do{
+                int wishListId=c.getInt(c.getColumnIndex(KEY_ID));
+                Log.i("wishId",Integer.toString(wishListId));
+
+                int wishListUserId=c.getInt(c.getColumnIndex(KEY_WISHLIST_USERID));
+                String wishListDate = c.getString(c.getColumnIndex(KEY_WISHLIST_DATE));
+                int wishListRestaurantId = c.getInt(c.getColumnIndex(KEY_WISHLIST_RESTAURANTID));
+                String wishListCompleteFlag = Integer.toString(c.getColumnIndex(KEY_WISHLIST_COMPLETEFLAG));
+                String wishListUserName;
+                String wishListRestaurantName;
+                ArrayList<String> wishListParticipants=new ArrayList<>();
+
+                // query the username by userId
+                String userName=getUserNameByUserId(wishListUserId,db);
+                Log.d("userName",userName);
+
+
+                // query the username by userId
+                String restaurantName=getRestaurantNameByRestaurantId(wishListRestaurantId,db);
+                Log.d("restaurantName",restaurantName);
+
+                // query the name or participants by userId
+                getParticipantsByWishListId(wishListId,db);
+
+
+                /*selectQuery="SELECT "+KEY_USER_USERNAME+" FROM "+TABLE_USER+" WHERE "+KEY_ID+" = " +wishListUserId;
+
+                Cursor subC=db.rawQuery(selectQuery,null);
+                if(subC==null){
+                    Log.d("No user","in user");
+
+                }else{
+                    subC.moveToFirst();
+                    wishListUserName=subC.getString(subC.getColumnIndex(KEY_USER_USERNAME));
+                    Log.d("TUNI",Integer.toString(wishListUserId));
+                    Log.d("TUNS",wishListUserName);
+                }*/
+
+                // query the restaurant by restaurantId
+                /*selectQuery="SELECT "+KEY_RESTAURANT_RESTAURANTNAME+" FROM "+TABLE_RESTAURANT+" WHERE "+KEY_ID+" = " +wishListRestaurantId;
+                subC=db.rawQuery(selectQuery,null);
+                if(subC==null){
+                    Log.d("No res","in res");
+
+                }else{
+                    subC.moveToFirst();
+                    wishListRestaurantName=subC.getString(subC.getColumnIndex(KEY_RESTAURANT_RESTAURANTNAME));
+                    Log.d("TUNI",wishListRestaurantId);
+                    Log.d("TUNS",wishListRestaurantName);
+                }
+                // query the participants by userId
+                selectQuery="SELECT "+KEY_PARTICIPATION_USERID+" FROM "+TABLE_PARTICIPATION+" WHERE "+KEY_PARTICIPATION_WISHLISTID+" = " +wishListId;
+                subC=db.rawQuery(selectQuery,null);
+                if(subC==null){
+                    Log.d("No par","in wishlist");
+                }else{
+                    subC.moveToFirst();
+                    do{
+                        String wishListParticipantsId=subC.getString(subC.getColumnIndex(KEY_PARTICIPATION_USERID));
+//                        selectQuery="SELECT "+KEY_USER_USERNAME+" FROM "+TABLE_USER+" WHERE "+KEY_PARTICIPATION_WISHLISTID+" = " +wishListId;
+                        subC=db.rawQuery(selectQuery,null);
+                    }while(subC.moveToNext());
+                }*/
+//            }while(c.moveToNext());
+//                    ){
+//                WishList wishList= new WishList();
+//                wishList.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+//                wishList.setUserId(c.getInt(c.getColumnIndex(KEY_WISHLIST_USERID)));
+//                wishList.setDate(c.getString(c.getColumnIndex(KEY_WISHLIST_DATE)));
+//                wishList.setRestaurantId(c.getInt(c.getColumnIndex(KEY_WISHLIST_RESTAURANTID)));
+//                wishList.setCompleteFlag(c.getInt(c.getColumnIndex(KEY_WISHLIST_COMPLETEFLAG)));
+//                sqlWishListArrayList.add(wishList);
+//            }
+            return sqlDisplayWishListArrayList;
         }
 
     }
+
+    public ArrayList<String> getParticipantsByWishListId(int wishListId,SQLiteDatabase db){
+        String selectQuery="SELECT "+KEY_WISHLIST_USERID+" FROM "+TABLE_WISHLIST+" WHERE "+KEY_ID+" = " +wishListId;
+        ArrayList<String> sqlUserName=new ArrayList<>();
+        Cursor subC=db.rawQuery(selectQuery,null);
+        if(subC==null){
+            Log.d("No participants","in participants");
+        }else{
+            subC.moveToFirst();
+            do {
+                int wishlistUserId = subC.getInt(subC.getColumnIndex(KEY_WISHLIST_USERID));
+                String userName=getUserNameByUserId(wishlistUserId,db);
+                Log.d("WISHLISTID", userName);
+                sqlUserName.add(userName);
+            }while(subC.moveToNext());
+        }
+        return sqlUserName;
+    }
+    public String getUserNameByUserId(int userId,SQLiteDatabase db){
+        String selectQuery="SELECT "+KEY_USER_USERNAME+" FROM "+TABLE_USER+" WHERE "+KEY_ID+" = " +userId;
+        String sqlUserName=new String();
+        Cursor subC=db.rawQuery(selectQuery,null);
+        if(subC==null){
+            Log.d("No user","in user");
+        }else{
+            subC.moveToFirst();
+            sqlUserName=subC.getString(subC.getColumnIndex(KEY_USER_USERNAME));
+            Log.d("TUNI",Integer.toString(userId));
+            Log.d("TUNS",sqlUserName);
+        }
+        return sqlUserName;
+    }
+
+    public String getRestaurantNameByRestaurantId(int restaurantId,SQLiteDatabase db){
+        String selectQuery="SELECT "+KEY_RESTAURANT_RESTAURANTNAME+" FROM "+TABLE_RESTAURANT+" WHERE "+KEY_ID+" = " +restaurantId;
+        String sqlRestaurantName=new String();
+        Cursor subC=db.rawQuery(selectQuery,null);
+        if(subC==null){
+            Log.d("No res","in res");
+        }else{
+            subC.moveToFirst();
+            sqlRestaurantName=subC.getString(subC.getColumnIndex(KEY_RESTAURANT_RESTAURANTNAME));
+            Log.d("TUNI",Integer.toString(restaurantId));
+            Log.d("TUNS",sqlRestaurantName);
+        }
+        return sqlRestaurantName;
+    }
+
+
 
     public void generateMetadata(){
 
@@ -309,8 +419,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Restaurant restaurant2 = new Restaurant(2, "World", "Sydney");
 
             //create Participation
-            Participation participation1 = new Participation(1,1 ,2 );
+            Participation participation1 = new Participation(1, 1 ,2 );
             Participation participation2 = new Participation(2, 1, 1);
+            Participation participation3 = new Participation(3, 1, 1);
+
 
             // Inserting data in db
             //insert user into db
@@ -329,6 +441,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //insert participation into db
             long participation1_id=createParticipation(participation1);
             long participation2_id=createParticipation(participation2);
+            long participation3_id=createParticipation(participation3);
 
 
 
