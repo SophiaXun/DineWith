@@ -6,6 +6,7 @@ import java.util.ArrayList;
  * Created by Yazhou on 11/20/2015.
  */
 public class DisplayWishList {
+    
     private String userName;
     private String date;
     private String restaurant;

@@ -40,12 +40,27 @@ public class WishListAdapter extends ArrayAdapter<DisplayWishList>{
         restaurant = (TextView) convertView.findViewById(R.id.restaurantShowTextView);
         participant = (TextView) convertView.findViewById(R.id.participantsShowTextView);
         joinButton=(Button) convertView.findViewById(R.id.joinButton);
+        joinButton();
+
         user.setText(String.valueOf(wishList.getUserName()));
         date.setText(wishList.getDate());
         restaurant.setText(String.valueOf(wishList.getRestaurant()));
         participant.setText(String.valueOf(wishList.displayParticipants()));
 
+
         // Return the completed view to render on screen
         return convertView;
+    }
+
+    public void joinButton(){
+        joinButton.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        Log.i("Join","Clicked!");
+                        HomePage.join();
+                    }
+                }
+        );
     }
 }

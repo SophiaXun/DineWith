@@ -51,16 +51,6 @@ public class HomePage extends AppCompatActivity {
 
         ArrayList<DisplayWishList> wishListsArrayList=dinewithDb.displayAllWishList();
         for(int i=0;i<wishListsArrayList.size();i++){
-
-
-//            Log.i("The wish list user", wishListsArrayList.get(i).getUserName());
-//            Log.i("The wish list date", wishListsArrayList.get(i).getDate());
-//            Log.i("The wish list restId", wishListsArrayList.get(i).getRestaurant());
-//            for(int k=0;k<wishListsArrayList.get(i).getParticipants().size();k++){
-//
-//                Log.i("The participate", wishListsArrayList.get(i).getParticipants().get(k));
-//            }
-//            Log.i("**************", "*******************");
             DisplayWishList wishList=new DisplayWishList();
             wishList=wishListsArrayList.get(0);
 
@@ -70,9 +60,12 @@ public class HomePage extends AppCompatActivity {
             WishListAdapter adapter=new WishListAdapter(this,wishListsArrayList);
             listView.setAdapter(adapter);
         }
-
-
     }
+
+    public static void join(){
+        Log.i("JOIN!!!!","!!!");
+    }
+
 
     public void addWishlistButton(){
         addWishLishButton=(Button)findViewById(R.id.addWishlistButton);
