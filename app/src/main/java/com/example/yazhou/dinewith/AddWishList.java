@@ -14,34 +14,33 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.helper.Database;
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.helper.DatabaseHelper;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class AddWishList extends AppCompatActivity {
 
     DatabaseHelper dinewithDb;
 
-    EditText userIdEditText;
-    EditText dateEditText;
-    EditText restaurantIdEditText;
-    EditText completeFlagEditText;
     Button submitButton;
 
     Spinner sp;
     ArrayList<String> sqlRestaurantName=new ArrayList<String>();
     ArrayAdapter<String> adapter;
 
+
+    //Date
     CalendarView calendar;
     int year;
     int month;
     int day;
+    TextView dateShowTextView;
 
-    Button datePicker;
-    static final int DILOG_ID=0;
 
 
     @Override
@@ -60,10 +59,7 @@ public class AddWishList extends AppCompatActivity {
 
 
 
-//        userIdEditText=(EditText)findViewById(R.id.userIdEditText);
-//        dateEditText=(EditText)findViewById(R.id.dateEditText);
-//        restaurantIdEditText=(EditText)findViewById(R.id.restaurantIdEditText);
-//        completeFlagEditText=(EditText)findViewById(R.id.completeFlagEditText);
+        dateShowTextView=(TextView)findViewById(R.id.dateShowTextView);
         submitButton=(Button)findViewById(R.id.submitButton);
 
 
@@ -71,6 +67,8 @@ public class AddWishList extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
         //Spinnerr View Display
 //        sp=(Spinner) findViewById(R.id.restaurantNameSpinner);
 //        spinnerListeners();
@@ -79,9 +77,15 @@ public class AddWishList extends AppCompatActivity {
         calendar=(CalendarView) findViewById(R.id.calendarView);
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
             @Override
-                public void onSelectedDayChange(CalendarView view,int year,int month,int day){
+                public void onSelectedDayChange(CalendarView view,int year,int month,int dayOfMonth){
 //                Toast.makeText(getApplicationContext(),day+"/"+month+"/"+year,Toast.LENGTH_LONG).show();
+                final Calendar c=Calendar.getInstance();
 
+                Log.i("the year", Integer.toString(year));
+                Log.i("the month", Integer.toString(month));
+                Log.i("the day", Integer.toString(dayOfMonth));
+                String date=dayOfMonth+"/"+month+"/"+year;
+                dateShowTextView.setText(date);
             }
         });
 
@@ -120,17 +124,17 @@ public class AddWishList extends AppCompatActivity {
                 new View.OnClickListener(){
                     public void onClick(View v){
 
-                        int userId=Integer.parseInt(userIdEditText.getText().toString());
-                        int restaurantId=Integer.parseInt(restaurantIdEditText.getText().toString());
-                        int completeFlag=Integer.parseInt(completeFlagEditText.getText().toString());
-                        String date=dateEditText.getText().toString();
+//                        int userId=Integer.parseInt(userIdEditText.getText().toString());
+//                        int restaurantId=Integer.parseInt(restaurantIdEditText.getText().toString());
+//                        int completeFlag=Integer.parseInt(completeFlagEditText.getText().toString());
+                        String date=dateShowTextView.getText().toString();
 
-                        boolean wishLishInsert=dinewithDb.insertWishList(userId,date,restaurantId,completeFlag);
-                        if(wishLishInsert==true){
-                            Log.d("Wish List Insert"," true");
-                        }else{
-                            Log.d("Wish List Insert"," false");
-                        }
+//                        boolean wishLishInsert=dinewithDb.insertWishList(userId,date,restaurantId,completeFlag);
+//                        if(wishLishInsert==true){
+//                            Log.d("Wish List Insert"," true");
+//                        }else{
+//                            Log.d("Wish List Insert"," false");
+//                        }
 
                         Log.d("Hello","World");
                         Intent intent=new Intent("com.example.yazhou.dinewith.HomePage");

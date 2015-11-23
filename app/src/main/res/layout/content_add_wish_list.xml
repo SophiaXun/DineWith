@@ -57,6 +57,10 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Date"
             android:id="@+id/dateTextView"/>
+        <TextView
+            android:layout_width="217dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/dateShowTextView"/>
     </LinearLayout>
 
     <LinearLayout
