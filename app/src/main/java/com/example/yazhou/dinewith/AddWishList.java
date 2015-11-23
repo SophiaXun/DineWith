@@ -93,7 +93,6 @@ public class AddWishList extends AppCompatActivity {
     public void getUserIdFromHomePage(){
         Intent intent=getIntent();
         userId= intent.getIntExtra("userId",-1);
-        Log.i("USERID2",Integer.toString(userId));
     }
 
     public void getDate(){
@@ -132,8 +131,9 @@ public class AddWishList extends AppCompatActivity {
         submitButton.setOnClickListener(
                 new View.OnClickListener(){
                     public void onClick(View v){
-                        String item = sp.getSelectedItem().toString();
-                        Log.i("The select",item);
+                        String restaurantNameFromSpinner = sp.getSelectedItem().toString();
+                        int restaurantId=dinewithDb.getRestaurantIdByRestaurantName(restaurantNameFromSpinner);
+
 
 
 //                        int userId=Integer.parseInt(userIdEditText.getText().toString());
@@ -147,8 +147,6 @@ public class AddWishList extends AppCompatActivity {
 //                        }else{
 //                            Log.d("Wish List Insert"," false");
 //                        }
-
-                        Log.d("Hello","World");
                         Intent intent=new Intent("com.example.yazhou.dinewith.HomePage");
                         startActivity(intent);
                     }

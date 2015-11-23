@@ -33,7 +33,6 @@ public class HomePage extends AppCompatActivity {
     public void getUserIdFromLoginPage(){
         Intent intent=getIntent();
         userId= intent.getIntExtra("userId",-1);
-        Log.i("USERID",Integer.toString(userId));
     }
 
     public void displayWishLish(){
@@ -45,14 +44,14 @@ public class HomePage extends AppCompatActivity {
         for(int i=0;i<wishListsArrayList.size();i++){
 
 
-            Log.i("The wish list user", wishListsArrayList.get(i).getUserName());
-            Log.i("The wish list date", wishListsArrayList.get(i).getDate());
-            Log.i("The wish list restId", wishListsArrayList.get(i).getRestaurant());
-            for(int k=0;k<wishListsArrayList.get(i).getParticipants().size();k++){
-
-                Log.i("The participate", wishListsArrayList.get(i).getParticipants().get(k));
-            }
-            Log.i("**************", "*******************");
+//            Log.i("The wish list user", wishListsArrayList.get(i).getUserName());
+//            Log.i("The wish list date", wishListsArrayList.get(i).getDate());
+//            Log.i("The wish list restId", wishListsArrayList.get(i).getRestaurant());
+//            for(int k=0;k<wishListsArrayList.get(i).getParticipants().size();k++){
+//
+//                Log.i("The participate", wishListsArrayList.get(i).getParticipants().get(k));
+//            }
+//            Log.i("**************", "*******************");
             DisplayWishList wishList=new DisplayWishList();
             wishList=wishListsArrayList.get(0);
 
@@ -73,7 +72,6 @@ public class HomePage extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d("Hello","World");
                         Intent intent = new Intent("com.example.yazhou.dinewith.AddWishList");
                         intent.putExtra("userId",userId);
                         startActivity(intent);

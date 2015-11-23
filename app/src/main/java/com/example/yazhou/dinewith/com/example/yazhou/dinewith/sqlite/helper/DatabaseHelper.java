@@ -410,6 +410,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return subC;
     }
 
+    public int getRestaurantIdByRestaurantName(String restaurantName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int sqlRestaurantId=-1;
+        String selectQuery="SELECT "+KEY_ID+" FROM "+TABLE_RESTAURANT+" WHERE "+KEY_RESTAURANT_RESTAURANTNAME+" = '" +restaurantName+"'";
+        Cursor subC=db.rawQuery(selectQuery,null);
+        if(subC==null){
+            Log.d("No res","in res");
+        }else{
+            subC.moveToFirst();
+            sqlRestaurantId=subC.getInt(subC.getColumnIndex(KEY_ID));
+        }
+        return sqlRestaurantId;
+    }
+
 
 
     public String getRestaurantNameByRestaurantId(int restaurantId,SQLiteDatabase db){
@@ -421,8 +435,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }else{
             subC.moveToFirst();
             sqlRestaurantName=subC.getString(subC.getColumnIndex(KEY_RESTAURANT_RESTAURANTNAME));
-            Log.d("TUNI",Integer.toString(restaurantId));
-            Log.d("TUNS",sqlRestaurantName);
         }
         return sqlRestaurantName;
     }
