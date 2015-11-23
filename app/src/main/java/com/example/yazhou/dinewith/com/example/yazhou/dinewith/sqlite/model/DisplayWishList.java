@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by Yazhou on 11/20/2015.
  */
 public class DisplayWishList {
-    
+    private int wishLishId;
     private String userName;
     private String date;
     private String restaurant;
@@ -16,12 +16,15 @@ public class DisplayWishList {
 
     }
 
-    public DisplayWishList(String userName,String date, String restaurant,ArrayList<String> participants){
+    public DisplayWishList(int wishLishId,String userName,String date, String restaurant,ArrayList<String> participants){
+        this.wishLishId=wishLishId;
         this.userName=userName;
         this.date=date;
         this.restaurant=restaurant;
         this.participants=participants;
     }
+
+    public int getWishLishId(){return wishLishId;}
 
     public String getUserName(){
         return userName;

@@ -19,7 +19,7 @@ public class HomePage extends AppCompatActivity {
 
     private static DatabaseHelper dinewithDb;
     private static Button addWishLishButton;
-    private int userId;
+    public static int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +62,9 @@ public class HomePage extends AppCompatActivity {
         }
     }
 
-    public static void join(){
-        Log.i("JOIN!!!!","!!!");
+    public static void join(int wishListId){
+        dinewithDb.addParticipants(userId,wishListId);
+
     }
 
 

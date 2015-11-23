@@ -23,13 +23,15 @@ public class WishListAdapter extends ArrayAdapter<DisplayWishList>{
     TextView restaurant;
     TextView participant;
     Button joinButton;
+    int wishListId;
+    DisplayWishList wishList;
     public WishListAdapter(Context context, ArrayList<DisplayWishList> wishList) {
         super(context, 0, wishList);
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        DisplayWishList wishList = getItem(position);
+        wishList = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.wishlist_template, parent, false);
@@ -46,6 +48,7 @@ public class WishListAdapter extends ArrayAdapter<DisplayWishList>{
         date.setText(wishList.getDate());
         restaurant.setText(String.valueOf(wishList.getRestaurant()));
         participant.setText(String.valueOf(wishList.displayParticipants()));
+        wishListId=wishList.getWishLishId();
 
 
         // Return the completed view to render on screen
@@ -57,8 +60,9 @@ public class WishListAdapter extends ArrayAdapter<DisplayWishList>{
                 new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
-                        Log.i("Join","Clicked!");
-                        HomePage.join();
+//                        Log.i("Join Clicked",Integer.toString(wishListId));
+                        HomePage.join(wishListId);
+                        participant.setText(String.valueOf(wishList.displayParticipants()));
                     }
                 }
         );

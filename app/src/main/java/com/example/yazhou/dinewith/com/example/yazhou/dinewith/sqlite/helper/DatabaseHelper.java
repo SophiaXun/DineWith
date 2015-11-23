@@ -289,7 +289,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         if (c==null){
-            Log.d("DatabaseHelper","No wish list in DB");
+            Log.d("DatabaseHelper", "No wish list in DB");
             return null;
         }else{
             c.moveToFirst();
@@ -319,7 +319,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             wishListParticipants=getParticipantsByWishListId(wishListId,db);
 
             //form a DisplayWishList
-            DisplayWishList displayWishList=new DisplayWishList(userName,wishListDate,restaurantName,wishListParticipants);
+            DisplayWishList displayWishList=new DisplayWishList(wishListId,userName,wishListDate,restaurantName,wishListParticipants);
             sqlDisplayWishListArrayList.add(displayWishList);
             }while(c.moveToNext());
 
@@ -378,10 +378,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public void addParticipants(int userId,int wishListId){
+        SQLiteDatabase db=getWritableDatabase();
+        String selectQuery="INSERT INTO "+TABLE_PARTICIPATION+" ( "+KEY_PARTICIPATION_WISHLISTID+" , " +KEY_PARTICIPATION_USERID+") VALUES ("+
+                wishListId+","+userId+")";
+
+        ArrayList<String> sqlUserName=new ArrayList<>();
+        Cursor subC=db.rawQuery(selectQuery,null);
+        if(subC.getCount()==0){
+            Log.d("Add participants","failed");
+        }
+        Log.d("!!!!!","!!!!!!!!!!");
+        displayAllWishList();
+
+    }
+
     public ArrayList<String> getParticipantsByWishListId(int wishListId,SQLiteDatabase db){
-//        String selectQuery="SELECT "+KEY_PARTICIPATION_USERID+" FROM "+TABLE_PARTICIPATION+" WHERE "+KEY_PARTICIPATION_WISHLISTID+" = " +wishListId;
         String selectQuery="SELECT * FROM "+TABLE_PARTICIPATION+" WHERE "+KEY_PARTICIPATION_WISHLISTID+" = " +wishListId;
-//        String selectQuery="SELECT * FROM "+TABLE_PARTICIPATION;
         ArrayList<String> sqlUserName=new ArrayList<>();
         Cursor subC=db.rawQuery(selectQuery,null);
         if(subC.getCount()==0){
