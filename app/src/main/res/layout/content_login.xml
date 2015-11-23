@@ -22,6 +22,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:hint="Enter Name"
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/usernameEditText"
@@ -44,6 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
+        android:hint="Enter password"
         android:ems="10"
         android:id="@+id/pwdEditText"
         android:layout_below="@+id/usernameEditText"
@@ -53,7 +55,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="loginButton"
+        android:text="Login"
         android:id="@+id/loginButton"
         android:layout_marginBottom="82dp"
         android:layout_alignParentBottom="true"

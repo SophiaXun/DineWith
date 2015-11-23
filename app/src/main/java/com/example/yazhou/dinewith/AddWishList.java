@@ -34,6 +34,9 @@ public class AddWishList extends AppCompatActivity {
     ArrayList<String> sqlRestaurantName=new ArrayList<String>();
     ArrayAdapter adapter;
 
+    //User
+    int userId;
+
 
     //Date
     CalendarView calendar;
@@ -50,6 +53,7 @@ public class AddWishList extends AppCompatActivity {
         setContentView(R.layout.activity_add_wish_list);
 
         dinewithDb=new DatabaseHelper(getBaseContext());
+        getUserIdFromHomePage();
 
         sqlRestaurantName.add("1");
         sqlRestaurantName.add("2");
@@ -84,6 +88,12 @@ public class AddWishList extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    public void getUserIdFromHomePage(){
+        Intent intent=getIntent();
+        userId= intent.getIntExtra("userId",-1);
+        Log.i("USERID2",Integer.toString(userId));
     }
 
     public void getDate(){

@@ -19,14 +19,21 @@ public class HomePage extends AppCompatActivity {
 
     private static DatabaseHelper dinewithDb;
     private static Button addWishLishButton;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        getUserIdFromLoginPage();
         displayWishLish();
-
         addWishlistButton();
+    }
+
+    public void getUserIdFromLoginPage(){
+        Intent intent=getIntent();
+        userId= intent.getIntExtra("userId",-1);
+        Log.i("USERID",Integer.toString(userId));
     }
 
     public void displayWishLish(){
@@ -68,6 +75,7 @@ public class HomePage extends AppCompatActivity {
                     public void onClick(View v) {
                         Log.d("Hello","World");
                         Intent intent = new Intent("com.example.yazhou.dinewith.AddWishList");
+                        intent.putExtra("userId",userId);
                         startActivity(intent);
                     }
                 }

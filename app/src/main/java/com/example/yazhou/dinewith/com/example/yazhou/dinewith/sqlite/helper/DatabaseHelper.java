@@ -204,21 +204,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return user;
     }
 
-    public boolean Login(String name, String pwd){
+    public int Login(String name, String pwd){
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT PWD FROM " + TABLE_USER + " WHERE "+ KEY_USER_USERNAME+ " =  '" + name+"'";
+        String selectQuery = "SELECT * FROM " + TABLE_USER + " WHERE "+ KEY_USER_USERNAME+ " =  '" + name+"'";
 //        String selectQuery = "SELECT * FROM " + TABLE_USER + " WHERE "+KEY_USER_USERNAME+"= 'Sophia'";
-        Cursor c=db.rawQuery(selectQuery,null);
+        Cursor c=db.rawQuery(selectQuery, null);
 
         if(c!=null)
             c.moveToFirst();
 
         String rightPwd = c.getString(c.getColumnIndex(KEY_USER_PWD));
+        int userId=-1;
         if(pwd.equals(rightPwd)){
-            return true;
-        }else{
-            return false;
+            userId=c.getInt(c.getColumnIndex(KEY_ID));
         }
+        return userId;
     }
 
     public Restaurant getRestaurant(long Id){

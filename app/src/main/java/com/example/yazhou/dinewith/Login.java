@@ -63,14 +63,15 @@ public class Login extends AppCompatActivity {
 // ////////////////////////////////////////////////////////////////////////////////
                         String usernameString=new String("Sophia");
                         String pwdString=new String("1");
-/////////////////////////////////////////////////////////////////////////
-                        boolean loginResult=dineWithDB.Login(usernameString,pwdString);
-                        if(loginResult){
-                            Intent intent=new Intent("com.example.yazhou.dinewith.HomePage");
-                            startActivity(intent);
-                        }else{
+//////////////////////////////////////////////////////////////////////////////////
+                        int userId=dineWithDB.Login(usernameString,pwdString);
+                        if(userId==-1){
                             TextView  reminder=(TextView)findViewById(R.id.reminderTextView);
                             reminder.setText("Incorrect Password");
+                        }else{
+                            Intent intent=new Intent("com.example.yazhou.dinewith.HomePage");
+                            intent.putExtra("userId",userId);
+                            startActivity(intent);
                         }
                     }
                 }
