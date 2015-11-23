@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -31,14 +32,14 @@ public class AddWishList extends AppCompatActivity {
 
     Spinner sp;
     ArrayList<String> sqlRestaurantName=new ArrayList<String>();
-    ArrayAdapter<String> adapter;
+    ArrayAdapter adapter;
 
 
     //Date
     CalendarView calendar;
-    int year;
-    int month;
-    int day;
+    int chosenYear;
+    int chosenMonth;
+    int chosenDay;
     TextView dateShowTextView;
 
 
@@ -54,37 +55,35 @@ public class AddWishList extends AppCompatActivity {
         sqlRestaurantName.add("2");
         sqlRestaurantName.add("3");
 
-
-//        adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,sqlRestaurantName);
-
-
-
         dateShowTextView=(TextView)findViewById(R.id.dateShowTextView);
         submitButton=(Button)findViewById(R.id.submitButton);
-
-
-        addWishList();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
         //Spinnerr View Display
-//        sp=(Spinner) findViewById(R.id.restaurantNameSpinner);
-//        spinnerListeners();
+        sp=(Spinner) findViewById(R.id.restaurantNameSpinner);
+//        adapter=ArrayAdapter.createFromResource(this,R.array.restaurant_name,R.layout.support_simple_spinner_dropdown_item);
+//        sp.setAdapter(adapter);
+
 
 //        CalendarView Display
         getDate();
+        spinnerListeners();
+
+        //Submit Button
+        addWishList();
 
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     public void getDate(){
@@ -92,12 +91,10 @@ public class AddWishList extends AppCompatActivity {
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
             @Override
             public void onSelectedDayChange(CalendarView view,int year,int month,int dayOfMonth){
-//                Toast.makeText(getApplicationContext(),day+"/"+month+"/"+year,Toast.LENGTH_LONG).show();
                 final Calendar c=Calendar.getInstance();
-
-                Log.i("the year", Integer.toString(year));
-                Log.i("the month", Integer.toString(month));
-                Log.i("the day", Integer.toString(dayOfMonth));
+                chosenYear=year;
+                chosenMonth=month;
+                chosenDay=dayOfMonth;
                 String date=dayOfMonth+"/"+month+"/"+year;
                 dateShowTextView.setText(date);
             }
@@ -105,14 +102,13 @@ public class AddWishList extends AppCompatActivity {
     }
 
     public void spinnerListeners(){
-        sp.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        sp.setAdapter(adapter);
-                    }
-                }
-        );
+//        sp.setOnItemClickListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                String restaurantName = sp.getSelectedItem().toString();
+//                Log.i("The restaurantName", restaurantName);
+//            }
+//        });
     }
 
     public ArrayList<String> getAllRestaurantName(){
@@ -126,6 +122,9 @@ public class AddWishList extends AppCompatActivity {
         submitButton.setOnClickListener(
                 new View.OnClickListener(){
                     public void onClick(View v){
+                        String item = sp.getSelectedItem().toString();
+                        Log.i("The select",item);
+
 
 //                        int userId=Integer.parseInt(userIdEditText.getText().toString());
 //                        int restaurantId=Integer.parseInt(restaurantIdEditText.getText().toString());
@@ -145,10 +144,6 @@ public class AddWishList extends AppCompatActivity {
                     }
 
                 }
-
-
-
-
         );
     }
 
