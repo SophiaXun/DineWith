@@ -380,11 +380,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void addParticipants(int userId,int wishListId){
         SQLiteDatabase db=getWritableDatabase();
+
         String selectQuery="INSERT INTO "+TABLE_PARTICIPATION+" ( "+KEY_PARTICIPATION_WISHLISTID+" , " +KEY_PARTICIPATION_USERID+") VALUES ("+
                 wishListId+","+userId+")";
-
-        ArrayList<String> sqlUserName=new ArrayList<>();
         Cursor subC=db.rawQuery(selectQuery,null);
+
+        String tmp="SELECT * FROM "+TABLE_PARTICIPATION;
+        Cursor cursorTmp=db.rawQuery(tmp,null);
+        cursorTmp.moveToFirst();
+        do {
+            int participateUserId = cursorTmp.getInt(cursorTmp.getColumnIndex(KEY_PARTICIPATION_USERID));
+            int participateId = cursorTmp.getInt(cursorTmp.getColumnIndex(KEY_ID));
+            int wishListIdinPar = cursorTmp.getInt(cursorTmp.getColumnIndex(KEY_PARTICIPATION_WISHLISTID));
+            String userName=getUserNameByUserId(participateUserId,db);
+            Log.d("***","***");
+            Log.d("wishListId",Integer.toString(wishListIdinPar));
+            Log.d("participateId",Integer.toString(participateId));
+            Log.d("WishParName", userName);
+
+
+        }while(cursorTmp.moveToNext());
+
+
+
+
         if(subC.getCount()==0){
             Log.d("Add participants","failed");
         }
