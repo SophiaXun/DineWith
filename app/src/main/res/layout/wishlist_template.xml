@@ -3,29 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@id/wishListListView">
-    <LinearLayout android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="25dip">
+    android:id="@+id/wishListListView">
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="id"
-            android:id="@+id/idTextView"
-            android:layout_weight="0.21"></TextView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/idShowTextView"
-            android:layout_weight="0.21" />
-
-    </LinearLayout>
 
     <LinearLayout android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -37,15 +16,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="userId"
-            android:id="@+id/userIdTextView"
-            android:layout_weight="0.16"></TextView>
+            android:text="user"
+            android:id="@+id/userTextView"
+            android:layout_weight="0.16">
+
+        </TextView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/userIdShowTextView"
+            android:id="@+id/userShowTextView"
             android:layout_weight="0.21" />
     </LinearLayout>
 
@@ -68,7 +49,9 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/dateShowTextView"
-            android:layout_weight="0.21" />
+            android:layout_weight="0.21" >
+
+        </TextView>
     </LinearLayout>
 
     <LinearLayout android:layout_width="fill_parent"
@@ -81,15 +64,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="restaurantId"
-            android:id="@+id/restaurantIdTextView"
+            android:text="Restaurant"
+            android:id="@+id/restaurantTextView"
             android:layout_weight="0.04"></TextView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/restaurantIdShowTextView"
+            android:id="@+id/restaurantShowTextView"
             android:layout_weight="0.15" />
     </LinearLayout>
 
@@ -103,15 +86,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="completeFlag"
-            android:id="@+id/completeTextView"
+            android:text="Participants"
+            android:id="@+id/participantsTextView"
             android:layout_weight="0.06"></TextView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/completeFlagShowTextView"
+            android:id="@+id/participantsShowTextView"
             android:layout_weight="0.21" />
     </LinearLayout>
 

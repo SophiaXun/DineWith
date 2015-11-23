@@ -268,35 +268,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<DisplayWishList> sqlDisplayWishListArrayList=new ArrayList<>();
         Cursor c = db.rawQuery(selectQuery, null);
 
+
         if (c==null){
             Log.d("DatabaseHelper","No wish list in DB");
             return null;
         }else{
             c.moveToFirst();
 
-//            do{
-                int wishListId=c.getInt(c.getColumnIndex(KEY_ID));
-                Log.i("wishId",Integer.toString(wishListId));
+            do{
+            int wishListId=c.getInt(c.getColumnIndex(KEY_ID));
+            Log.i("wishId",Integer.toString(wishListId));
 
-                int wishListUserId=c.getInt(c.getColumnIndex(KEY_WISHLIST_USERID));
-                String wishListDate = c.getString(c.getColumnIndex(KEY_WISHLIST_DATE));
-                int wishListRestaurantId = c.getInt(c.getColumnIndex(KEY_WISHLIST_RESTAURANTID));
-                String wishListCompleteFlag = Integer.toString(c.getColumnIndex(KEY_WISHLIST_COMPLETEFLAG));
-                String wishListUserName;
-                String wishListRestaurantName;
-                ArrayList<String> wishListParticipants=new ArrayList<>();
+            int wishListUserId=c.getInt(c.getColumnIndex(KEY_WISHLIST_USERID));
+            String wishListDate = c.getString(c.getColumnIndex(KEY_WISHLIST_DATE));
+            int wishListRestaurantId = c.getInt(c.getColumnIndex(KEY_WISHLIST_RESTAURANTID));
+            String wishListCompleteFlag = Integer.toString(c.getColumnIndex(KEY_WISHLIST_COMPLETEFLAG));
+            String wishListUserName;
+            String wishListRestaurantName;
+            ArrayList<String> wishListParticipants=new ArrayList<>();
 
-                // query the username by userId
-                String userName=getUserNameByUserId(wishListUserId,db);
-                Log.d("userName",userName);
+            // query the username by userId
+            String userName=getUserNameByUserId(wishListUserId,db);
+            Log.d("userName",userName);
 
 
-                // query the username by userId
-                String restaurantName=getRestaurantNameByRestaurantId(wishListRestaurantId,db);
-                Log.d("restaurantName",restaurantName);
+            // query the username by userId
+            String restaurantName=getRestaurantNameByRestaurantId(wishListRestaurantId,db);
+            Log.d("restaurantName",restaurantName);
 
-                // query the name or participants by userId
-                getParticipantsByWishListId(wishListId,db);
+            // query the name or participants by userId
+            wishListParticipants=getParticipantsByWishListId(wishListId,db);
+
+            //form a DisplayWishList
+            DisplayWishList displayWishList=new DisplayWishList(userName,wishListDate,restaurantName,wishListParticipants);
+            sqlDisplayWishListArrayList.add(displayWishList);
+            }while(c.moveToNext());
+
 
 
                 /*selectQuery="SELECT "+KEY_USER_USERNAME+" FROM "+TABLE_USER+" WHERE "+KEY_ID+" = " +wishListUserId;
@@ -353,17 +360,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<String> getParticipantsByWishListId(int wishListId,SQLiteDatabase db){
-        String selectQuery="SELECT "+KEY_WISHLIST_USERID+" FROM "+TABLE_WISHLIST+" WHERE "+KEY_ID+" = " +wishListId;
+//        String selectQuery="SELECT "+KEY_PARTICIPATION_USERID+" FROM "+TABLE_PARTICIPATION+" WHERE "+KEY_PARTICIPATION_WISHLISTID+" = " +wishListId;
+        String selectQuery="SELECT * FROM "+TABLE_PARTICIPATION+" WHERE "+KEY_PARTICIPATION_WISHLISTID+" = " +wishListId;
+//        String selectQuery="SELECT * FROM "+TABLE_PARTICIPATION;
         ArrayList<String> sqlUserName=new ArrayList<>();
         Cursor subC=db.rawQuery(selectQuery,null);
-        if(subC==null){
+        if(subC.getCount()==0){
             Log.d("No participants","in participants");
         }else{
             subC.moveToFirst();
             do {
-                int wishlistUserId = subC.getInt(subC.getColumnIndex(KEY_WISHLIST_USERID));
-                String userName=getUserNameByUserId(wishlistUserId,db);
-                Log.d("WISHLISTID", userName);
+                int participateUserId = subC.getInt(subC.getColumnIndex(KEY_PARTICIPATION_USERID));
+                int participateId = subC.getInt(subC.getColumnIndex(KEY_ID));
+                int wishListIdinPar = subC.getInt(subC.getColumnIndex(KEY_PARTICIPATION_WISHLISTID));
+                String userName=getUserNameByUserId(participateUserId,db);
+                Log.d("***","***");
+                Log.d("wishListId",Integer.toString(wishListIdinPar));
+                Log.d("participateId",Integer.toString(participateId));
+                Log.d("WishParName", userName);
+
                 sqlUserName.add(userName);
             }while(subC.moveToNext());
         }
@@ -378,11 +393,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }else{
             subC.moveToFirst();
             sqlUserName=subC.getString(subC.getColumnIndex(KEY_USER_USERNAME));
-            Log.d("TUNI",Integer.toString(userId));
-            Log.d("TUNS",sqlUserName);
+//            Log.d("TUNI",Integer.toString(userId));
+//            Log.d("TUNS",sqlUserName);
         }
         return sqlUserName;
     }
+
+    public Cursor getAllRestaurantName(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery="SELECT "+KEY_RESTAURANT_RESTAURANTNAME+" FROM "+TABLE_RESTAURANT;
+
+        Cursor subC=db.rawQuery(selectQuery,null);
+        if(subC==null){
+            Log.d("NO RES", "in RES");
+        }
+        return subC;
+    }
+
+
 
     public String getRestaurantNameByRestaurantId(int restaurantId,SQLiteDatabase db){
         String selectQuery="SELECT "+KEY_RESTAURANT_RESTAURANTNAME+" FROM "+TABLE_RESTAURANT+" WHERE "+KEY_ID+" = " +restaurantId;
@@ -420,7 +448,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             //create Participation
             Participation participation1 = new Participation(1, 1 ,2 );
-            Participation participation2 = new Participation(2, 1, 1);
+            Participation participation2 = new Participation(2, 2, 1);
             Participation participation3 = new Participation(3, 1, 1);
 
 

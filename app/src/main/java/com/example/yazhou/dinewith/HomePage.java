@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.helper.DatabaseHelper;
+import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model.DisplayWishList;
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model.WishList;
 
 import java.util.ArrayList;
@@ -33,22 +34,28 @@ public class HomePage extends AppCompatActivity {
         dinewithDb=new DatabaseHelper(this);
         dinewithDb.displayAllWishList();
 
-//        ArrayList<WishList> wishListsArrayList=dinewithDb.displayAllWishList();
-//        for(int i=0;i<wishListsArrayList.size();i++){
-//            Log.i("The wish list id", Integer.toString(wishListsArrayList.get(i).getId()));
-//            Log.i("The wish list userId", Integer.toString(wishListsArrayList.get(i).getUserId()));
-//            Log.i("The wish list date", wishListsArrayList.get(i).getDate());
-//            Log.i("The wish list restId", Integer.toString(wishListsArrayList.get(i).getRestaurantId()));
-//            Log.i("The wish list comFlag", Integer.toString(wishListsArrayList.get(i).getCompleteFlag()));
-//        }
+        ArrayList<DisplayWishList> wishListsArrayList=dinewithDb.displayAllWishList();
+        for(int i=0;i<wishListsArrayList.size();i++){
 
-//        WishList wishList=new WishList();
-//        wishList=wishListsArrayList.get(0);
-//        setContentView(R.layout.activity_home_page);
-////        ArrayAdapter<WishList> adapter=new ArrayAdapter<WishList>(this,android.R.layout.,items);
-//        WishListAdapter adapter=new WishListAdapter(this,wishListsArrayList);
-//        ListView listView=(ListView)findViewById(R.id.wishListListView);
-//        listView.setAdapter(adapter);
+
+            Log.i("The wish list user", wishListsArrayList.get(i).getUserName());
+            Log.i("The wish list date", wishListsArrayList.get(i).getDate());
+            Log.i("The wish list restId", wishListsArrayList.get(i).getRestaurant());
+            for(int k=0;k<wishListsArrayList.get(i).getParticipants().size();k++){
+
+                Log.i("The participate", wishListsArrayList.get(i).getParticipants().get(k));
+            }
+            Log.i("**************", "*******************");
+            DisplayWishList wishList=new DisplayWishList();
+            wishList=wishListsArrayList.get(0);
+
+            setContentView(R.layout.activity_home_page);
+            ListView listView=(ListView)findViewById(R.id.wishListListView);
+//            ArrayAdapter<DisplayWishList> adapter=new ArrayAdapter<DisplayWishList>(this,android.R.layout.simple_list_item_1,wishListsArrayList);
+            WishListAdapter adapter=new WishListAdapter(this,wishListsArrayList);
+            listView.setAdapter(adapter);
+        }
+
 
     }
 

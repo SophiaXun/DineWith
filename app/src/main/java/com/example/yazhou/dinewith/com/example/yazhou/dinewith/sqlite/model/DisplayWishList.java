@@ -37,4 +37,12 @@ public class DisplayWishList {
     public ArrayList<String> getParticipants(){
         return participants;
     }
+
+    public String displayParticipants(){
+        String participantsString=new String();
+        for(int i=0;i<participants.size();i++){
+            participantsString=participantsString+participants.get(i)+"   ";
+        }
+        return participantsString;
+    }
 }
