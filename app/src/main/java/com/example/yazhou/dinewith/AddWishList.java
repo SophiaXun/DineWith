@@ -74,20 +74,8 @@ public class AddWishList extends AppCompatActivity {
 //        spinnerListeners();
 
 //        CalendarView Display
-        calendar=(CalendarView) findViewById(R.id.calendarView);
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
-            @Override
-                public void onSelectedDayChange(CalendarView view,int year,int month,int dayOfMonth){
-//                Toast.makeText(getApplicationContext(),day+"/"+month+"/"+year,Toast.LENGTH_LONG).show();
-                final Calendar c=Calendar.getInstance();
+        getDate();
 
-                Log.i("the year", Integer.toString(year));
-                Log.i("the month", Integer.toString(month));
-                Log.i("the day", Integer.toString(dayOfMonth));
-                String date=dayOfMonth+"/"+month+"/"+year;
-                dateShowTextView.setText(date);
-            }
-        });
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +87,22 @@ public class AddWishList extends AppCompatActivity {
 //        });
     }
 
+    public void getDate(){
+        calendar=(CalendarView) findViewById(R.id.calendarView);
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
+            @Override
+            public void onSelectedDayChange(CalendarView view,int year,int month,int dayOfMonth){
+//                Toast.makeText(getApplicationContext(),day+"/"+month+"/"+year,Toast.LENGTH_LONG).show();
+                final Calendar c=Calendar.getInstance();
 
+                Log.i("the year", Integer.toString(year));
+                Log.i("the month", Integer.toString(month));
+                Log.i("the day", Integer.toString(dayOfMonth));
+                String date=dayOfMonth+"/"+month+"/"+year;
+                dateShowTextView.setText(date);
+            }
+        });
+    }
 
     public void spinnerListeners(){
         sp.setOnClickListener(
