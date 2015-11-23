@@ -54,12 +54,9 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 ///////////////////////////////////////////////////////////////////////////////////
-
                          dineWithDB.generateMetadata();
-
 //                        String usernameString=username.getText().toString();
 //                        String pwdString=pwd.getText().toString();
-
 // ////////////////////////////////////////////////////////////////////////////////
                         String usernameString=new String("Sophia");
                         String pwdString=new String("1");

@@ -76,13 +76,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        SQLiteDatabase thisDatabase=getReadableDatabase();
+        ////////////uncomment onUpgrade ///////////////////////////////
+        ////////////uncomment onCreate(db) ///////////////////////////////
+        ////////////run ///////////////////////////////
+        ////////////uncomment onUpgrade ///////////////////////////////
+        ////////////comment onUpgrade ///////////////////////////////
+//        onUpgrade(thisDatabase,2,3);
+        /////////////////////////////////////////////////////
     }
 
-//    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-//        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-//    }
-
     public void onCreate(SQLiteDatabase db) {
+
 
         // creating required tables
         db.execSQL(CREATE_TABLE_USER);
@@ -259,6 +264,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         participation.setUserId(c.getInt(c.getColumnIndex(KEY_PARTICIPATION_USERID)));
 
         return participation;
+    }
+
+    public void deleteWishList(int wishListId){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "DELETE FROM " + TABLE_WISHLIST +" WHERE "+KEY_ID+" = 5";
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c==null){
+            Log.i("delete", "not success");
+
+        }else{
+        Log.i("delete"," success");
+        }
     }
 
     public ArrayList<DisplayWishList> displayAllWishList(){

@@ -102,9 +102,9 @@ public class AddWishList extends AppCompatActivity {
             public void onSelectedDayChange(CalendarView view,int year,int month,int dayOfMonth){
                 final Calendar c=Calendar.getInstance();
                 chosenYear=year;
-                chosenMonth=month;
+                chosenMonth=month+1;
                 chosenDay=dayOfMonth;
-                String date=dayOfMonth+"/"+month+"/"+year;
+                String date=(month+1)+"-"+dayOfMonth+"-"+year;
                 dateShowTextView.setText(date);
             }
         });
@@ -133,21 +133,20 @@ public class AddWishList extends AppCompatActivity {
                     public void onClick(View v){
                         String restaurantNameFromSpinner = sp.getSelectedItem().toString();
                         int restaurantId=dinewithDb.getRestaurantIdByRestaurantName(restaurantNameFromSpinner);
+                        String date=dateShowTextView.getText().toString();
+                        int completeFlag=0;
+                        boolean wishLishInsert=dinewithDb.insertWishList(userId,date,restaurantId,completeFlag);
+
+
 
 
 
 //                        int userId=Integer.parseInt(userIdEditText.getText().toString());
 //                        int restaurantId=Integer.parseInt(restaurantIdEditText.getText().toString());
 //                        int completeFlag=Integer.parseInt(completeFlagEditText.getText().toString());
-                        String date=dateShowTextView.getText().toString();
 
-//                        boolean wishLishInsert=dinewithDb.insertWishList(userId,date,restaurantId,completeFlag);
-//                        if(wishLishInsert==true){
-//                            Log.d("Wish List Insert"," true");
-//                        }else{
-//                            Log.d("Wish List Insert"," false");
-//                        }
                         Intent intent=new Intent("com.example.yazhou.dinewith.HomePage");
+//                        intent.putExtra("userIdFromAdd",userId);
                         startActivity(intent);
                     }
 

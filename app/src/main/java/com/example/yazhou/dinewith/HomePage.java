@@ -26,6 +26,10 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         getUserIdFromLoginPage();
+        if(userId==-1){
+//            getUserIdFromAddPage();
+        }
+
         displayWishLish();
         addWishlistButton();
     }
@@ -34,6 +38,11 @@ public class HomePage extends AppCompatActivity {
         Intent intent=getIntent();
         userId= intent.getIntExtra("userId",-1);
     }
+
+//    public void getUserIdFromAddPage(){
+//        Intent intent=getIntent();
+//        userId=intent.getIntExtra("userIdFromAdd",-1);
+//    }
 
     public void displayWishLish(){
 
