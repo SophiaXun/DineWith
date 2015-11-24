@@ -51,6 +51,7 @@ public class AddWishList extends AppCompatActivity {
 
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES=10;
     private static final long MIN_TIME_BW_UPDATES=1000*60*1;
+    GPSTracker gps;
 
 
 
@@ -86,13 +87,6 @@ public class AddWishList extends AppCompatActivity {
         dateShowTextView = (TextView) findViewById(R.id.dateShowTextView);
         submitButton = (Button) findViewById(R.id.submitButton);
 
-
-
-
-
-
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -109,6 +103,24 @@ public class AddWishList extends AppCompatActivity {
 
         //Submit Button
         addWishList();
+
+        locationButton=(Button)findViewById(R.id.locationButton);
+
+        locationButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                gps=new GPSTracker(AddWishList.this);
+                if(gps.canGetLocation()){
+                    double latitude=gps.getLatitude();
+                    double longitude=gps.getLongitude();
+                    Toast.makeText(getApplicationContext(),
+                            "Your Location is -\nLat: "+latitude+"\nLon:"+longitude,
+                            Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -131,18 +143,7 @@ public class AddWishList extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        locationManager.removeUpdates(locationListener);
-    }
 
-    @Override
-    protected void onResume(){
-        super.onResume();
-        locationManager.requestLocationUpdates(PROVIDER,0,0,locationListener);
-
-    }
 
     private LocationListener locationListener= new LocationListener() {
         @Override

@@ -34,6 +34,7 @@ public class HomePage extends AppCompatActivity {
 
         displayWishLish();
         addWishlistButton();
+
     }
 
     public void getUserIdFromLoginPage(){
