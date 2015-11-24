@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -58,9 +60,21 @@ public class HomePage extends AppCompatActivity {
             ListView listView=(ListView)findViewById(R.id.wishListListView);
 //            ArrayAdapter<DisplayWishList> adapter=new ArrayAdapter<DisplayWishList>(this,android.R.layout.simple_list_item_1,wishListsArrayList);
             WishListAdapter adapter=new WishListAdapter(this,wishListsArrayList);
+
+
+//            listView.setOnItemClickListener(
+//                    new AdapterView.OnItemClickListener() {
+//                        @Override
+//                        public void onItemClick(AdapterView arg0, View arg1, int position, long arg3) {
+//                            Log.i("++", Integer.toString(position));
+//                        }
+//                    }
+//            );
+
             listView.setAdapter(adapter);
         }
     }
+
 
     public static void join(int wishListId){
         dinewithDb.addParticipants(userId,wishListId);

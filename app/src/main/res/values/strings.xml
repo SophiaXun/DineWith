@@ -10,7 +10,8 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <string-array name="restaurant_name">
-        <item> Hello </item>
-        <item> World </item>
+        <item> Burger King </item>
+        <item> Grilled </item>
+        <item> Burp </item>
     </string-array>
 </resources>

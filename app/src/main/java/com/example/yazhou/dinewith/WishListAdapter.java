@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model.DisplayWishList;
@@ -23,8 +24,9 @@ public class WishListAdapter extends ArrayAdapter<DisplayWishList>{
     TextView restaurant;
     TextView participant;
     Button joinButton;
-    int wishListId;
+
     DisplayWishList wishList;
+
     public WishListAdapter(Context context, ArrayList<DisplayWishList> wishList) {
         super(context, 0, wishList);
     }
@@ -43,38 +45,26 @@ public class WishListAdapter extends ArrayAdapter<DisplayWishList>{
         participant = (TextView) convertView.findViewById(R.id.participantsShowTextView);
         joinButton=(Button) convertView.findViewById(R.id.joinButton);
 
-        wishListId=wishList.getWishLishId();
-
-        Log.i("@@","@@");
-        Log.i("id",Integer.toString(wishList.getWishLishId()));
-        Log.i("date",wishList.getDate());
-        joinButton.setId(wishListId);
-
 
         user.setText(String.valueOf(wishList.getUserName()));
         date.setText(wishList.getDate());
         restaurant.setText(String.valueOf(wishList.getRestaurant()));
         participant.setText(String.valueOf(wishList.displayParticipants()));
 
-        joinButton();
-        Log.i("ButtonID",joinButton.toString());
-
-
+        joinButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        View parentRow=(View) v.getParent();
+                        ListView listView=(ListView) parentRow.getParent();
+                        final int position =listView.getPositionForView(parentRow);
+                        HomePage.join(position+1);
+                    }
+                }
+        );
         // Return the completed view to render on screen
         return convertView;
     }
 
-    public void joinButton(){
-        joinButton.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v){
 
-                        int tmp=joinButton.getId();
-                        Log.i("tempID",Integer.toString(tmp));
-                        HomePage.join(tmp-1);
-                    }
-                }
-        );
-    }
 }

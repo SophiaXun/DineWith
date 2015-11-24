@@ -1,7 +1,13 @@
 package com.example.yazhou.dinewith;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -30,8 +36,28 @@ public class AddWishList extends AppCompatActivity {
 
     Button submitButton;
 
+    Button locationButton;
+    TextView latitude;
+    TextView longtitude;
+    LocationManager locationManager;
+    String PROVIDER = LocationManager.GPS_PROVIDER;
+    Context context;
+    boolean isGPSEnabled=false;
+    boolean isNetworkEnabled=false;
+    boolean canGetLocation=false;
+
+    double latitudeDouble;
+    double longtitudeDouble;
+
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES=10;
+    private static final long MIN_TIME_BW_UPDATES=1000*60*1;
+
+
+
+
+
     Spinner sp;
-    ArrayList<String> sqlRestaurantName=new ArrayList<String>();
+    ArrayList<String> sqlRestaurantName = new ArrayList<String>();
     ArrayAdapter adapter;
 
     //User
@@ -45,22 +71,27 @@ public class AddWishList extends AppCompatActivity {
     int chosenDay;
     TextView dateShowTextView;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_wish_list);
 
-        dinewithDb=new DatabaseHelper(getBaseContext());
+        dinewithDb = new DatabaseHelper(getBaseContext());
         getUserIdFromHomePage();
 
         sqlRestaurantName.add("1");
         sqlRestaurantName.add("2");
         sqlRestaurantName.add("3");
 
-        dateShowTextView=(TextView)findViewById(R.id.dateShowTextView);
-        submitButton=(Button)findViewById(R.id.submitButton);
+        dateShowTextView = (TextView) findViewById(R.id.dateShowTextView);
+        submitButton = (Button) findViewById(R.id.submitButton);
+
+
+
+
+
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -89,6 +120,53 @@ public class AddWishList extends AppCompatActivity {
             }
         });
     }
+
+    public void showLocation(Location location){
+        if(location==null){
+            Log.i("$$","location null");
+            Toast.makeText(getApplicationContext(),"Cannot find your current location", Toast.LENGTH_LONG).show();
+        }else{
+            latitude.setText("Latitude"+location.getLatitude());
+            longtitude.setText("Longtitude"+location.getLongitude());
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        locationManager.removeUpdates(locationListener);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        locationManager.requestLocationUpdates(PROVIDER,0,0,locationListener);
+
+    }
+
+    private LocationListener locationListener= new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            showLocation(location);
+
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
+
 
     public void getUserIdFromHomePage(){
         Intent intent=getIntent();

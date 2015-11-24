@@ -82,7 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ////////////run ///////////////////////////////
         ////////////uncomment onUpgrade ///////////////////////////////
         ////////////comment onUpgrade ///////////////////////////////
-//        onUpgrade(thisDatabase,2,3);
+//        onUpgrade(thisDatabase,3,4);
         /////////////////////////////////////////////////////
     }
 
@@ -95,7 +95,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_WISHLIST);
         db.execSQL(CREATE_TABLE_PARTICIPATION);
 /////////////////////////////////////////////////////////////////////////////////////////
-//        onCreate(db);
+        onCreate(db);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -106,7 +106,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PARTICIPATION);
 
         // create new tables
-        onCreate(db);
+         onCreate(db);
     }
 
     /*
@@ -402,8 +402,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }while(cursorTmp.moveToNext());
 
 
-
-
         if(subC.getCount()==0){
             Log.d("Add participants","failed");
         }
@@ -493,49 +491,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public void generateMetadata(){
+        //create Users
+        User user1 = new User(1, "Sophia", "1");
+        User user2 = new User(2, "Evan", "2");
+        User user3 = new User(3, "Emily", "3");
+
+        //create WishList
+
+        WishList wishList1 = new WishList(1, 1, "11-15-2015", 1, 0);
+        WishList wishList2 = new WishList(2, 1, "11-16-2015", 2, 0);
+        WishList wishList3 = new WishList(3, 2, "11-17-2015", 1, 1);
+        WishList wishList4 = new WishList(4, 3, "11-18-2015", 3, 0);
+
+        //create Restaurant
+        Restaurant restaurant1 = new Restaurant(1, "Burger King", "Beijing");
+        Restaurant restaurant2 = new Restaurant(2, "Grilled", "Sydney");
+        Restaurant restaurant3 = new Restaurant(3, "Burp", "Adelaide");
+
+        //create Participation
+        Participation participation1 = new Participation(1, 1, 2 );
+        Participation participation2 = new Participation(2, 1, 3);
+        Participation participation3 = new Participation(3, 3, 1);
+        Participation participation4 = new Participation(4, 4, 1);
 
 
+        //insert user into db
+        long user1_id=createUser(user1);
+        long user2_id=createUser(user2);
+        long user3_id=createUser(user3);
 
-            //create Users
-            User user1 = new User(1, "Sophia", "1");
-            User user2 = new User(2, "Jason", "2");
+        //insert restaurant into db
+        long restaurant1_id=createRestaurant(restaurant1);
+        long restaurant2_id=createRestaurant(restaurant2);
+        long restaurant3_id=createRestaurant(restaurant3);
 
-            //create WishList
-            WishList wishList1 = new WishList(1, 1, "11-15-2015", 1, 0);
-            WishList wishList2 = new WishList(2, 1, "11-16-2015", 2, 0);
-            WishList wishList3 = new WishList(3, 2, "11-17-2015", 1, 1);
+        //insert wishList into db
+        long wishLish1_id=createWishlist(wishList1);
+        long wishList2_id=createWishlist(wishList2);
+        long wishList3_id=createWishlist(wishList3);
+        long wishList4_id=createWishlist(wishList4);
 
-            //create Restaurant
-            Restaurant restaurant1 = new Restaurant(1, "Hello", "Beijing");
-            Restaurant restaurant2 = new Restaurant(2, "World", "Sydney");
-
-            //create Participation
-            Participation participation1 = new Participation(1, 1 ,2 );
-            Participation participation2 = new Participation(2, 2, 1);
-            Participation participation3 = new Participation(3, 1, 1);
-
-
-            // Inserting data in db
-            //insert user into db
-            long user1_id=createUser(user1);
-            long user2_id=createUser(user2);
-
-            //insert restaurant into db
-            long restaurant1_id=createRestaurant(restaurant1);
-            long restaurant2_id=createRestaurant(restaurant2);
-
-            //insert wishList into db
-            long wishLish1_id=createWishlist(wishList1);
-            long wishList2_id=createWishlist(wishList2);
-            long wishList3_id=createWishlist(wishList3);
-
-            //insert participation into db
-            long participation1_id=createParticipation(participation1);
-            long participation2_id=createParticipation(participation2);
-            long participation3_id=createParticipation(participation3);
-
-
-
+        //insert participation into db
+        long participation1_id=createParticipation(participation1);
+        long participation2_id=createParticipation(participation2);
+        long participation3_id=createParticipation(participation3);
+        long participation4_id=createParticipation(participation4);
     }
 
 
