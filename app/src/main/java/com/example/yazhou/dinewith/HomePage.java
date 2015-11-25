@@ -90,8 +90,8 @@ public class HomePage extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Intent intent = new Intent("com.example.yazhou.dinewith.AddWishList");
-                        Intent intent = new Intent("com.google.android.gms.maps.SupportMapFragment");
+                        Intent intent = new Intent("com.example.yazhou.dinewith.AddWishList");
+//                        Intent intent = new Intent("com.google.android.gms.maps.SupportMapFragment");
 
                         intent.putExtra("userId",userId);
                         startActivity(intent);
