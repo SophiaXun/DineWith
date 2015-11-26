@@ -39,7 +39,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //RESTAURANT Table
     public static final String KEY_RESTAURANT_RESTAURANTNAME="restaurantName";
-    public static final String KEY_RESTAURANT_LOCATION="location";
+    public static final String KEY_RESTAURANT_LONGITUTE="longitute";
+    public static final String KEY_RESTAURANT_LATITUDE="latitude";
 
     //WISHLIST Table
     public static final String KEY_WISHLIST_USERID="userId";
@@ -61,7 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //RESTAURANT table create statement
     public static final String CREATE_TABLE_RESTAURANT = "CREATE TABLE " + TABLE_RESTAURANT
             + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_RESTAURANT_RESTAURANTNAME + " TEXT,"
-            + KEY_RESTAURANT_LOCATION + " TEXT" + ")";
+            + KEY_RESTAURANT_LATITUDE + " INTEGER, " + KEY_RESTAURANT_LONGITUTE+" INTEGER "+")";
 
     //WISHLIST table create statement
     public static final String CREATE_TABLE_WISHLIST = "CREATE TABLE " + TABLE_WISHLIST
@@ -82,7 +83,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ////////////run ///////////////////////////////
         ////////////uncomment onUpgrade ///////////////////////////////
         ////////////comment onUpgrade ///////////////////////////////
-//        onUpgrade(thisDatabase,3,4);
+        //onUpgrade(thisDatabase,4,5);
         /////////////////////////////////////////////////////
     }
 
@@ -95,7 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_WISHLIST);
         db.execSQL(CREATE_TABLE_PARTICIPATION);
 /////////////////////////////////////////////////////////////////////////////////////////
-        onCreate(db);
+        //onCreate(db);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -131,7 +132,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_ID, restaurant.getId());
         values.put(KEY_RESTAURANT_RESTAURANTNAME, restaurant.getName());
-        values.put(KEY_RESTAURANT_LOCATION, restaurant.getLocation());
+        values.put(KEY_RESTAURANT_LATITUDE, restaurant.getLatitude());
+        values.put(KEY_RESTAURANT_LONGITUTE, restaurant.getLongitude());
 
         // insert row
         long longRestaurantId=db.insert(TABLE_RESTAURANT,null,values);
@@ -241,7 +243,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Restaurant restaurant= new Restaurant();
         restaurant.setName(c.getString(c.getColumnIndex(KEY_RESTAURANT_RESTAURANTNAME)));
         restaurant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-        restaurant.setLocation(c.getString(c.getColumnIndex(KEY_RESTAURANT_LOCATION)));
+        restaurant.setLatitude(c.getInt(c.getColumnIndex(KEY_RESTAURANT_LATITUDE)));
+        restaurant.setLongitude(c.getInt(c.getColumnIndex(KEY_RESTAURANT_LONGITUTE)));
 
         return restaurant;
     }
@@ -504,9 +507,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         WishList wishList4 = new WishList(4, 3, "11-18-2015", 3, 0);
 
         //create Restaurant
-        Restaurant restaurant1 = new Restaurant(1, "Burger King", "Beijing");
-        Restaurant restaurant2 = new Restaurant(2, "Grilled", "Sydney");
-        Restaurant restaurant3 = new Restaurant(3, "Burp", "Adelaide");
+        Restaurant restaurant1 = new Restaurant(1, "Burp", -34.922669,138.598609);
+        Restaurant restaurant2 = new Restaurant(2, "Grilled", -34.922679,138.606559);
+        Restaurant restaurant3 = new Restaurant(3, "China Chilli", -34.930239,138.597543);
 
         //create Participation
         Participation participation1 = new Participation(1, 1, 2 );

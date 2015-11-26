@@ -24,7 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.helper.Database;
+//import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.helper.Database;
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.helper.DatabaseHelper;
 
 import java.util.ArrayList;

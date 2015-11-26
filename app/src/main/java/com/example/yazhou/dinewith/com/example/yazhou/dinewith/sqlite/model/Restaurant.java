@@ -6,18 +6,19 @@ package com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model;
 public class Restaurant {
     int id;
     String restaurantName;
-    String location;
-    int rate;
+    double longitude;
+    double latitude;
 
 
     public Restaurant(){
 
     }
 
-    public Restaurant(int id,String name,String location){
+    public Restaurant(int id,String name,double longitude,double latitude  ){
         this.id=id;
         this.restaurantName=name;
-        this.location=location;
+        this.longitude=longitude;
+        this.latitude=latitude;
     }
 
     public void setId(int id){
@@ -28,8 +29,11 @@ public class Restaurant {
         this.restaurantName=name;
     }
 
-    public void setLocation(String location){
-        this.location=location;
+    public void setLongitude(double longitude){
+        this.longitude=longitude;
+    }
+    public void setLatitude(double latitude){
+        this.latitude=latitude;
     }
 
     public int getId(){
@@ -40,7 +44,10 @@ public class Restaurant {
         return restaurantName;
     }
 
-    public String getLocation(){
-        return location;
+    public double getLongitude(){
+        return longitude;
+    }
+    public double getLatitude(){
+        return latitude;
     }
 }
