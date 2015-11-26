@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.helper.DatabaseHelper;
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model.DisplayWishList;
@@ -35,7 +36,14 @@ public class HomePage extends AppCompatActivity {
 
         displayWishLish();
         addWishlistButton();
+        showRemaiderToast();
 
+    }
+
+    public void showRemaiderToast(){
+        Toast.makeText(getApplicationContext(),
+                "Click Restaurant Name" ,
+                Toast.LENGTH_LONG).show();
     }
 
     public void getUserIdFromLoginPage(){
@@ -74,12 +82,20 @@ public class HomePage extends AppCompatActivity {
 //            );
 
             listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(getApplicationContext(),
+                            "Please wait for a moment",
+                            Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 
 
     public static void join(int wishListId){
-        dinewithDb.addParticipants(userId,wishListId);
+        dinewithDb.addParticipants(userId, wishListId);
 
 
 

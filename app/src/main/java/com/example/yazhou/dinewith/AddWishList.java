@@ -36,22 +36,22 @@ public class AddWishList extends AppCompatActivity {
 
     Button submitButton;
 
-    Button locationButton;
-    TextView latitude;
-    TextView longtitude;
-    LocationManager locationManager;
-    String PROVIDER = LocationManager.GPS_PROVIDER;
-    Context context;
-    boolean isGPSEnabled=false;
-    boolean isNetworkEnabled=false;
-    boolean canGetLocation=false;
-
-    double latitudeDouble;
-    double longtitudeDouble;
-
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES=10;
-    private static final long MIN_TIME_BW_UPDATES=1000*60*1;
-    GPSTracker gps;
+//    Button locationButton;
+//    TextView latitude;
+//    TextView longtitude;
+//    LocationManager locationManager;
+//    String PROVIDER = LocationManager.GPS_PROVIDER;
+//    Context context;
+//    boolean isGPSEnabled=false;
+//    boolean isNetworkEnabled=false;
+//    boolean canGetLocation=false;
+//
+//    double latitudeDouble;
+//    double longtitudeDouble;
+//
+//    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES=10;
+//    private static final long MIN_TIME_BW_UPDATES=1000*60*1;
+//    GPSTracker gps;
 
 
 
@@ -104,69 +104,69 @@ public class AddWishList extends AppCompatActivity {
         //Submit Button
         addWishList();
 
-        locationButton=(Button)findViewById(R.id.locationButton);
+//        locationButton=(Button)findViewById(R.id.locationButton);
 
-        locationButton.setOnClickListener(new View.OnClickListener(){
+//        locationButton.setOnClickListener(new View.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View v) {
+//                gps=new GPSTracker(AddWishList.this);
+//                if(gps.canGetLocation()){
+//                    double latitude=gps.getLatitude();
+//                    double longitude=gps.getLongitude();
+//                    Toast.makeText(getApplicationContext(),
+//                            "Your Location is -\nLat: "+latitude+"\nLon:"+longitude,
+//                            Toast.LENGTH_LONG).show();
+//
+//                }
+//            }
+//        });
 
-            @Override
-            public void onClick(View v) {
-                gps=new GPSTracker(AddWishList.this);
-                if(gps.canGetLocation()){
-                    double latitude=gps.getLatitude();
-                    double longitude=gps.getLongitude();
-                    Toast.makeText(getApplicationContext(),
-                            "Your Location is -\nLat: "+latitude+"\nLon:"+longitude,
-                            Toast.LENGTH_LONG).show();
 
-                }
-            }
-        });
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
     }
 
-    public void showLocation(Location location){
-        if(location==null){
-            Log.i("$$","location null");
-            Toast.makeText(getApplicationContext(),"Cannot find your current location", Toast.LENGTH_LONG).show();
-        }else{
-            latitude.setText("Latitude"+location.getLatitude());
-            longtitude.setText("Longtitude"+location.getLongitude());
-        }
-    }
+//    public void showLocation(Location location){
+//        if(location==null){
+//            Log.i("$$","location null");
+//            Toast.makeText(getApplicationContext(),"Cannot find your current location", Toast.LENGTH_LONG).show();
+//        }else{
+//            latitude.setText("Latitude"+location.getLatitude());
+//            longtitude.setText("Longtitude"+location.getLongitude());
+//        }
+//    }
 
 
 
-    private LocationListener locationListener= new LocationListener() {
-        @Override
-        public void onLocationChanged(Location location) {
-            showLocation(location);
-
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-
-        }
-    };
+//    private LocationListener locationListener= new LocationListener() {
+//        @Override
+//        public void onLocationChanged(Location location) {
+//            showLocation(location);
+//
+//        }
+//
+//        @Override
+//        public void onStatusChanged(String provider, int status, Bundle extras) {
+//
+//        }
+//
+//        @Override
+//        public void onProviderEnabled(String provider) {
+//
+//        }
+//
+//        @Override
+//        public void onProviderDisabled(String provider) {
+//
+//        }
+//    };
 
 
     public void getUserIdFromHomePage(){

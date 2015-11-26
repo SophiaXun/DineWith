@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.helper.DatabaseHelper;
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model.DisplayWishList;
@@ -63,7 +64,7 @@ public class WishListAdapter extends ArrayAdapter<DisplayWishList>{
                 new View.OnClickListener(){
                     @Override
                 public void onClick(View v){
-//                        Intent intent = new Intent(c,"com.google.android.gms.maps.SupportMapFragment");
+
                         TextView tv=(TextView)v.findViewById(R.id.restaurantShowTextView);
                         String restaurantName=tv.getText().toString();
 
@@ -72,16 +73,10 @@ public class WishListAdapter extends ArrayAdapter<DisplayWishList>{
                         double latitude=restaurant.getLatitude();
                         double longitude=restaurant.getLongitude();
 
-                        Log.i("Lat", Double.toString(latitude));
-                        Log.i("Log",Double.toString(longitude));
-
                         Intent intent = new Intent(c,MapsActivity.class);
                         intent.putExtra("latitude",latitude);
-                        intent.putExtra("long",longitude);
-                        intent.putExtra("restaurantName",restaurantName);
-                        Log.i("))Long",Double.toString(longitude));
-                        Log.i("))Lat",Double.toString(latitude));
-
+                        intent.putExtra("long", longitude);
+                        intent.putExtra("restaurantName", restaurantName);
                         c.startActivity(intent);
                     }
                 }
