@@ -73,7 +73,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/restaurantShowTextView"
-            android:layout_weight="0.15" />
+            android:layout_weight="0.15"
+            android:linksClickable="true" />
     </LinearLayout>
 
     <LinearLayout android:layout_width="fill_parent"

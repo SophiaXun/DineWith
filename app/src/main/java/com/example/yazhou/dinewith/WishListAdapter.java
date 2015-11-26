@@ -1,6 +1,7 @@
 package com.example.yazhou.dinewith;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +28,11 @@ public class WishListAdapter extends ArrayAdapter<DisplayWishList>{
 
     DisplayWishList wishList;
 
+    Context c;
+
     public WishListAdapter(Context context, ArrayList<DisplayWishList> wishList) {
         super(context, 0, wishList);
+        c=context;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -51,14 +55,27 @@ public class WishListAdapter extends ArrayAdapter<DisplayWishList>{
         restaurant.setText(String.valueOf(wishList.getRestaurant()));
         participant.setText(String.valueOf(wishList.displayParticipants()));
 
+        restaurant.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                public void onClick(View v){
+//                        Intent intent = new Intent(c,"com.google.android.gms.maps.SupportMapFragment");
+                        Intent intent = new Intent(c,MapsActivity.class);
+
+                        c.startActivity(intent);
+                    }
+                }
+        );
+
         joinButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         View parentRow=(View) v.getParent();
                         ListView listView=(ListView) parentRow.getParent();
-                        final int position =listView.getPositionForView(parentRow);
+                        final int position = listView.getPositionForView(parentRow);
                         HomePage.join(position+1);
+
                     }
                 }
         );
