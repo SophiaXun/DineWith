@@ -13,13 +13,14 @@ import android.widget.ListView;
 
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.helper.DatabaseHelper;
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model.DisplayWishList;
+import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model.Restaurant;
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model.WishList;
 
 import java.util.ArrayList;
 
 public class HomePage extends AppCompatActivity {
 
-    private static DatabaseHelper dinewithDb;
+    protected static DatabaseHelper dinewithDb;
     private static Button addWishLishButton;
     public static int userId;
 
@@ -80,6 +81,8 @@ public class HomePage extends AppCompatActivity {
     public static void join(int wishListId){
         dinewithDb.addParticipants(userId,wishListId);
 
+
+
     }
 
 
@@ -93,11 +96,13 @@ public class HomePage extends AppCompatActivity {
                         Intent intent = new Intent("com.example.yazhou.dinewith.AddWishList");
 //                        Intent intent = new Intent("com.google.android.gms.maps.SupportMapFragment");
 
-                        intent.putExtra("userId",userId);
+                        intent.putExtra("userId", userId);
                         startActivity(intent);
                     }
                 }
         );
 
     }
+
+
 }

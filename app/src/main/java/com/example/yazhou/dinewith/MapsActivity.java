@@ -17,17 +17,17 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private static final LatLng MAVELIKARA = new LatLng(39.884502,116.461314);
+//    private static final LatLng MAVELIKARA = new LatLng(39.884502,116.461314);
 
 
-    public void processMap(){
-        if(mMap== null){
-            mMap=((MapFragment)getFragmentManager().findFragmentById(R.id.map)).getMap();
-        }else{
-            mMap.addMarker(new MarkerOptions().position(MAVELIKARA).title("This is the marked area"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MAVELIKARA,13));
-        }
-    }
+//    public void processMap(){
+//        if(mMap== null){
+//            mMap=((MapFragment)getFragmentManager().findFragmentById(R.id.map)).getMap();
+//        }else{
+//            mMap.addMarker(new MarkerOptions().position(MAVELIKARA).title("This is the marked area"));
+//            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MAVELIKARA,13));
+//        }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +56,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(39.884502, 116.461314);
-        LatLng sydney=MAVELIKARA;
+//        LatLng sydney=MAVELIKARA;
         Intent intent=getIntent();
-        int latitude=intent.getIntExtra("latitude", -1);
-        int longitude=intent.getIntExtra("longitude",-1);
-        Log.i("+++++++",Integer.toString(latitude));
-        Log.i("+++++++",Integer.toString(longitude));
-        mMap.addMarker(new MarkerOptions().position(sydney).title("My Home"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        double latitude=intent.getDoubleExtra("latitude", 39.884502);
+        double longitude=intent.getDoubleExtra("long",116.461314);
+        String restaurantName=intent.getStringExtra("restaurantName");
+        LatLng restaurant = new LatLng(latitude,longitude);
+        Log.i("+++Lat", Double.toString(latitude));
+        Log.i("+++Lon", Double.toString(longitude));
+        Log.i("+++++++", restaurantName);
+//        LatLng restaurant = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(restaurant).title(restaurantName));
+
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(restaurant,14.0f));
+
     }
 }

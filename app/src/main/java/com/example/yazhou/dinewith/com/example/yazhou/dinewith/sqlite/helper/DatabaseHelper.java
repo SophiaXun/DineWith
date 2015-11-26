@@ -62,7 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //RESTAURANT table create statement
     public static final String CREATE_TABLE_RESTAURANT = "CREATE TABLE " + TABLE_RESTAURANT
             + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_RESTAURANT_RESTAURANTNAME + " TEXT,"
-            + KEY_RESTAURANT_LATITUDE + " INTEGER, " + KEY_RESTAURANT_LONGITUTE+" INTEGER "+")";
+            + KEY_RESTAURANT_LATITUDE + " REAL, " + KEY_RESTAURANT_LONGITUTE+" REAL "+")";
 
     //WISHLIST table create statement
     public static final String CREATE_TABLE_WISHLIST = "CREATE TABLE " + TABLE_WISHLIST
@@ -84,7 +84,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ////////////uncomment onUpgrade ///////////////////////////////
         ////////////comment onUpgrade ///////////////////////////////
         //onUpgrade(thisDatabase,4,5);
-        /////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////
     }
 
     public void onCreate(SQLiteDatabase db) {
@@ -96,7 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_WISHLIST);
         db.execSQL(CREATE_TABLE_PARTICIPATION);
 /////////////////////////////////////////////////////////////////////////////////////////
-        //onCreate(db);
+        onCreate(db);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -243,8 +243,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Restaurant restaurant= new Restaurant();
         restaurant.setName(c.getString(c.getColumnIndex(KEY_RESTAURANT_RESTAURANTNAME)));
         restaurant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-        restaurant.setLatitude(c.getInt(c.getColumnIndex(KEY_RESTAURANT_LATITUDE)));
-        restaurant.setLongitude(c.getInt(c.getColumnIndex(KEY_RESTAURANT_LONGITUTE)));
+        restaurant.setLatitude(c.getDouble(c.getColumnIndex(KEY_RESTAURANT_LATITUDE)));
+        restaurant.setLongitude(c.getDouble(c.getColumnIndex(KEY_RESTAURANT_LONGITUTE)));
 
         return restaurant;
     }
@@ -326,56 +326,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             sqlDisplayWishListArrayList.add(displayWishList);
             }while(c.moveToNext());
 
-
-
-                /*selectQuery="SELECT "+KEY_USER_USERNAME+" FROM "+TABLE_USER+" WHERE "+KEY_ID+" = " +wishListUserId;
-
-                Cursor subC=db.rawQuery(selectQuery,null);
-                if(subC==null){
-                    Log.d("No user","in user");
-
-                }else{
-                    subC.moveToFirst();
-                    wishListUserName=subC.getString(subC.getColumnIndex(KEY_USER_USERNAME));
-                    Log.d("TUNI",Integer.toString(wishListUserId));
-                    Log.d("TUNS",wishListUserName);
-                }*/
-
-                // query the restaurant by restaurantId
-                /*selectQuery="SELECT "+KEY_RESTAURANT_RESTAURANTNAME+" FROM "+TABLE_RESTAURANT+" WHERE "+KEY_ID+" = " +wishListRestaurantId;
-                subC=db.rawQuery(selectQuery,null);
-                if(subC==null){
-                    Log.d("No res","in res");
-
-                }else{
-                    subC.moveToFirst();
-                    wishListRestaurantName=subC.getString(subC.getColumnIndex(KEY_RESTAURANT_RESTAURANTNAME));
-                    Log.d("TUNI",wishListRestaurantId);
-                    Log.d("TUNS",wishListRestaurantName);
-                }
-                // query the participants by userId
-                selectQuery="SELECT "+KEY_PARTICIPATION_USERID+" FROM "+TABLE_PARTICIPATION+" WHERE "+KEY_PARTICIPATION_WISHLISTID+" = " +wishListId;
-                subC=db.rawQuery(selectQuery,null);
-                if(subC==null){
-                    Log.d("No par","in wishlist");
-                }else{
-                    subC.moveToFirst();
-                    do{
-                        String wishListParticipantsId=subC.getString(subC.getColumnIndex(KEY_PARTICIPATION_USERID));
-//                        selectQuery="SELECT "+KEY_USER_USERNAME+" FROM "+TABLE_USER+" WHERE "+KEY_PARTICIPATION_WISHLISTID+" = " +wishListId;
-                        subC=db.rawQuery(selectQuery,null);
-                    }while(subC.moveToNext());
-                }*/
-//            }while(c.moveToNext());
-//                    ){
-//                WishList wishList= new WishList();
-//                wishList.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-//                wishList.setUserId(c.getInt(c.getColumnIndex(KEY_WISHLIST_USERID)));
-//                wishList.setDate(c.getString(c.getColumnIndex(KEY_WISHLIST_DATE)));
-//                wishList.setRestaurantId(c.getInt(c.getColumnIndex(KEY_WISHLIST_RESTAURANTID)));
-//                wishList.setCompleteFlag(c.getInt(c.getColumnIndex(KEY_WISHLIST_COMPLETEFLAG)));
-//                sqlWishListArrayList.add(wishList);
-//            }
             return sqlDisplayWishListArrayList;
         }
 
@@ -501,8 +451,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //create WishList
 
-        WishList wishList1 = new WishList(1, 1, "11-15-2015", 1, 0);
-        WishList wishList2 = new WishList(2, 1, "11-16-2015", 2, 0);
+        WishList wishList1 = new WishList(1, 2, "11-15-2015", 1, 0);
+        WishList wishList2 = new WishList(2, 3, "11-16-2015", 2, 0);
         WishList wishList3 = new WishList(3, 2, "11-17-2015", 1, 1);
         WishList wishList4 = new WishList(4, 3, "11-18-2015", 3, 0);
 
@@ -512,8 +462,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Restaurant restaurant3 = new Restaurant(3, "China Chilli", -34.930239,138.597543);
 
         //create Participation
-        Participation participation1 = new Participation(1, 1, 2 );
-        Participation participation2 = new Participation(2, 1, 3);
+        Participation participation1 = new Participation(1, 1, 3 );
+        Participation participation2 = new Participation(2, 2, 2);
         Participation participation3 = new Participation(3, 3, 1);
         Participation participation4 = new Participation(4, 4, 1);
 

@@ -14,7 +14,7 @@ public class Restaurant {
 
     }
 
-    public Restaurant(int id,String name,double longitude,double latitude  ){
+    public Restaurant(int id,String name,double latitude,double  longitude  ){
         this.id=id;
         this.restaurantName=name;
         this.longitude=longitude;

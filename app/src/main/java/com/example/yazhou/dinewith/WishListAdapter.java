@@ -2,6 +2,7 @@ package com.example.yazhou.dinewith;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.helper.DatabaseHelper;
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model.DisplayWishList;
+import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model.Restaurant;
 import com.example.yazhou.dinewith.com.example.yazhou.dinewith.sqlite.model.WishList;
 
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ public class WishListAdapter extends ArrayAdapter<DisplayWishList>{
     Button joinButton;
 
     DisplayWishList wishList;
+    DatabaseHelper dineWith;
 
     Context c;
 
@@ -35,7 +39,7 @@ public class WishListAdapter extends ArrayAdapter<DisplayWishList>{
         c=context;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         // Get the data item for this position
         wishList = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
@@ -60,9 +64,23 @@ public class WishListAdapter extends ArrayAdapter<DisplayWishList>{
                     @Override
                 public void onClick(View v){
 //                        Intent intent = new Intent(c,"com.google.android.gms.maps.SupportMapFragment");
+                        TextView tv=(TextView)v.findViewById(R.id.restaurantShowTextView);
+                        String restaurantName=tv.getText().toString();
+
+                        int restaurantId=HomePage.dinewithDb.getRestaurantIdByRestaurantName(restaurantName);
+                        Restaurant restaurant=HomePage.dinewithDb.getRestaurant(restaurantId);
+                        double latitude=restaurant.getLatitude();
+                        double longitude=restaurant.getLongitude();
+
+                        Log.i("Lat", Double.toString(latitude));
+                        Log.i("Log",Double.toString(longitude));
+
                         Intent intent = new Intent(c,MapsActivity.class);
-                        intent.putExtra("latitude",1);
-                        intent.putExtra("longitute",2);
+                        intent.putExtra("latitude",latitude);
+                        intent.putExtra("long",longitude);
+                        intent.putExtra("restaurantName",restaurantName);
+                        Log.i("))Long",Double.toString(longitude));
+                        Log.i("))Lat",Double.toString(latitude));
 
                         c.startActivity(intent);
                     }
@@ -77,6 +95,9 @@ public class WishListAdapter extends ArrayAdapter<DisplayWishList>{
                         ListView listView=(ListView) parentRow.getParent();
                         final int position = listView.getPositionForView(parentRow);
                         HomePage.join(position+1);
+                        notifyDataSetChanged();
+
+
 
                     }
                 }
