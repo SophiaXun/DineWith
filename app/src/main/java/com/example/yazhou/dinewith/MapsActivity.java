@@ -1,7 +1,9 @@
 package com.example.yazhou.dinewith;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -16,6 +18,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private static final LatLng MAVELIKARA = new LatLng(39.884502,116.461314);
+
 
     public void processMap(){
         if(mMap== null){
@@ -52,7 +55,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(39.884502, 116.461314);
+//        LatLng sydney = new LatLng(39.884502, 116.461314);
+        LatLng sydney=MAVELIKARA;
+        Intent intent=getIntent();
+        int latitude=intent.getIntExtra("latitude", -1);
+        int longitude=intent.getIntExtra("longitude",-1);
+        Log.i("+++++++",Integer.toString(latitude));
+        Log.i("+++++++",Integer.toString(longitude));
         mMap.addMarker(new MarkerOptions().position(sydney).title("My Home"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }

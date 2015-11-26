@@ -61,6 +61,8 @@ public class WishListAdapter extends ArrayAdapter<DisplayWishList>{
                 public void onClick(View v){
 //                        Intent intent = new Intent(c,"com.google.android.gms.maps.SupportMapFragment");
                         Intent intent = new Intent(c,MapsActivity.class);
+                        intent.putExtra("latitude",1);
+                        intent.putExtra("longitute",2);
 
                         c.startActivity(intent);
                     }

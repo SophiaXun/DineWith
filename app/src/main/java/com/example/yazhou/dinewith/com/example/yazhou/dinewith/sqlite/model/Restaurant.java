@@ -7,6 +7,8 @@ public class Restaurant {
     int id;
     String restaurantName;
     String location;
+    int rate;
+
 
     public Restaurant(){
 
